@@ -22,6 +22,7 @@ router.post("/", ensureAdmin, async (req, res, next) => {
 
     let job = await Job.create(req.body);
     return res.status(201).json({ job });
+
   } catch (e) {
     return next(e);
   }
@@ -39,6 +40,10 @@ router.get("/", async (req, res, next) => {
       let errs = validator.errors.map((e) => e.stack);
       throw new BadRequestError(errs);
     }
+
+    const jobs = await Job.findAll(q);
+    return res.json({ jobs });
+  
   } catch (e) {
     return next(e);
   }
@@ -69,12 +74,12 @@ router.patch("/:id", ensureAdmin, async (req, res, next) => {
 });
 
 router.delete("/:id", ensureAdmin, async (req, res, next) => {
-    try {
-        await Job.remove(req.params.id);
-        return res.json({ Deleted: +req.params.id });
-      } catch (e) {
-        return next(e);
-      }
-})
+  try {
+    await Job.remove(req.params.id);
+    return res.json({ Deleted: +req.params.id });
+  } catch (e) {
+    return next(e);
+  }
+});
 
 module.exports = router;

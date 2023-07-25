@@ -119,7 +119,6 @@ describe("GET /jobs", () => {
   });
   test("works with filtering", async () => {
     let resp = await request(app).get(`/jobs`).query({ hasEquity: true });
-
     expect(resp.body).toEqual({
       jobs: [
         {
@@ -163,13 +162,21 @@ describe("GET /jobs", () => {
           companyHandle: "c1",
           companyName: "C1",
         },
+        {
+          id: expect.any(Number),
+          title: "Job3",
+          salary: 2000,
+          equity: null,
+          companyHandle: "c1",
+          companyName: "C1",
+        }
       ],
     });
   });
   test("bad request error if filter invalid", async () => {
     let resp = await request(app)
       .get(`/jobs`)
-      .query({ minSalary: "100", test: "test" });
+      .query({ minSalary: 45, test: "test" });
     expect(resp.statusCode).toEqual(400);
   });
 });

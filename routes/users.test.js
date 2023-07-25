@@ -378,20 +378,20 @@ describe("DELETE /users/:username", function () {
 describe("POST /users/:username/jobs/:id", () => {
   test("works for admin", async () => {
     let resp = await request(app)
-      .post(`users/u1/jobs/${testJobIds[1]}`)
+      .post(`/users/u1/jobs/${testJobIds[1]}`)
       .set("authorization", `Bearer ${adminToken}`);
-    expect(resp.body).toEqual({ applied: testJobIds[1] });
+    expect(resp.body).toEqual({ Applied: testJobIds[1] });
   });
 
   test("unathorized error for not same user", async () => {
     let resp = await request(app)
-      .post(`users/u1/jobs/${testJobIds[1]}`)
+      .post(`/users/u1/jobs/${testJobIds[1]}`)
       .set("authorization", `Bearer ${u2Token}`);
     expect(resp.statusCode).toEqual(401);
   });
 
   test("unathorized error for anon user", async () => {
-    let resp = await request(app).post(`users/u1/jobs/${testJobIds[1]}`);
+    let resp = await request(app).post(`/users/u1/jobs/${testJobIds[1]}`);
     expect(resp.statusCode).toEqual(401);
   });
 

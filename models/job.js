@@ -17,10 +17,8 @@ class Job {
     return job;
   }
 
-  static async findAll({ minSalary, hasEquity, title }= {}) {
-    
-    let query =
-      `SELECT j.id, j.title, j.salary, j.equity, j.company_handle AS "companyHandle", c.name AS "companyName"
+  static async findAll({ minSalary, hasEquity, title } = {}) {
+    let query = `SELECT j.id, j.title, j.salary, j.equity, j.company_handle AS "companyHandle", c.name AS "companyName"
           FROM jobs AS j LEFT JOIN companies AS c ON c.handle = j.company_handle`;
 
     let whereExp = [];
